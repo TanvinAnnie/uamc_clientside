@@ -61,8 +61,7 @@ export default function HeroSlider({
   const hero = heroes[current];
 
   return (
-    <section className="relative isolate h-screen min-h-[850px] w-full overflow-hidden">
-
+    <section className="relative h-screen min-h-[850px] w-full overflow-visible">
       {/* Background */}
 
       <Image
@@ -99,7 +98,7 @@ export default function HeroSlider({
 
       {/* Container */}
 
-      <div className="relative z-20 mx-auto flex h-full max-w-[1500px] flex-col px-5 md:px-10 xl:px-16">
+      <div className="relative z-10 mx-auto flex h-full max-w-[1500px] flex-col px-5 md:px-10 xl:px-16">
               {/* ========================= */}
       {/* Top Navigation */}
       {/* ========================= */}
@@ -262,7 +261,7 @@ export default function HeroSlider({
             <div
               className="
                 relative
-                overflow-hidden
+               overflow-visible
                 rounded-[36px]
                 border
                 border-white/15
