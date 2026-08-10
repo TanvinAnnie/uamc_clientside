@@ -27,7 +27,7 @@ export default function TopBar() {
       >
         {/* ================= Left ================= */}
 
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-8">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-7">
           {/* Address */}
 
           <div className="flex items-start gap-2.5">

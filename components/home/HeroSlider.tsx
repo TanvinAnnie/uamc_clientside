@@ -3,213 +3,405 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+
 import {
   ChevronLeft,
   ChevronRight,
   ArrowUpRight,
 } from "lucide-react";
 
+
 interface Hero {
   _id: string;
+
   tagline: string;
+
   title: string;
+
   highlightText: string;
+
   lastTitle: string;
+
   buttonText: string;
+
   buttonLink: string;
+
   backgroundImage: string;
+
   rightTitle: string;
+
   courseOneTitle: string;
+
   courseOneDescription: string;
+
   courseTwoTitle: string;
+
   courseTwoDescription: string;
 }
+
 
 interface HeroSliderProps {
   heroes: Hero[];
 }
 
+
 export default function HeroSlider({
   heroes,
 }: HeroSliderProps) {
+
+
   const [current, setCurrent] = useState(0);
 
+
   useEffect(() => {
+
     if (heroes.length <= 1) return;
 
+
     const timer = setInterval(() => {
+
       setCurrent((prev) =>
-        prev === heroes.length - 1 ? 0 : prev + 1
+        prev === heroes.length - 1
+          ? 0
+          : prev + 1
       );
-    }, 3000);
+
+
+    }, 5000);
+
+
 
     return () => clearInterval(timer);
+
+
   }, [heroes]);
 
+
+
   const nextSlide = () => {
+
     setCurrent((prev) =>
-      prev === heroes.length - 1 ? 0 : prev + 1
+      prev === heroes.length - 1
+        ? 0
+        : prev + 1
     );
+
   };
 
+
+
   const prevSlide = () => {
+
     setCurrent((prev) =>
-      prev === 0 ? heroes.length - 1 : prev - 1
+      prev === 0
+        ? heroes.length - 1
+        : prev - 1
     );
+
   };
+
+
 
   const hero = heroes[current];
 
+
+  if (!hero) return null;
   return (
-    <section className="relative h-screen min-h-[850px] w-full overflow-visible">
-      {/* Background */}
+  <section
+    className="
+      relative
+      h-[720px]
+      w-full
+      overflow-hidden
+    "
+  >
 
-      <Image
-        src={hero.backgroundImage}
-        alt={hero.title}
-        fill
-        priority
-        className="object-cover"
-      />
+    {/* ================= Background Image ================= */}
 
-      {/* Dark Overlay */}
+    <Image
+      src={hero.backgroundImage}
+      alt={hero.title}
+      fill
+      priority
+      className="
+        object-cover
+        object-center
+      "
+    />
 
-      <div className="absolute inset-0 bg-black/45" />
 
-      {/* Left Gradient */}
+    {/* Dark Overlay */}
 
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent" />
+    <div
+      className="
+        absolute
+        inset-0
+        bg-black/35
+      "
+    />
 
-      {/* Bottom Green Gradient */}
 
-      <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-t from-[#005B4B]/90 via-[#005B4B]/30 to-transparent" />
+    {/* Green Bottom Gradient */}
 
-      {/* Grid */}
+    <div
+      className="
+        absolute
+        bottom-0
+        left-0
+        right-0
+        h-72
+        bg-gradient-to-t
+        from-emerald-700/70
+        via-emerald-600/20
+        to-transparent
+      "
+    />
+
+
+    {/* Grid Overlay */}
+
+    <div
+      className="
+        absolute
+        inset-0
+        opacity-20
+        [background-image:linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)]
+        [background-size:100px_100px]
+      "
+    />
+
+
+    {/* ================= Main Wrapper ================= */}
+
+    <div
+      className="
+        relative
+        z-10
+        mx-auto
+        flex
+        h-full
+       max-w-[1320px]
+        flex-col
+        px-5
+        sm:px-8
+        lg:px-10
+      "
+    >
+
+
+      {/* ================= Slider Header ================= */}
 
       <div
         className="
-          absolute
-          inset-0
-          opacity-10
-          [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)]
-          [background-size:110px_110px]
+          flex
+          h-24
+          items-center
+          justify-between
         "
-      />
+      >
 
-      {/* Container */}
 
-      <div className="relative z-10 mx-auto flex h-full max-w-[1500px] flex-col px-5 md:px-10 xl:px-16">
-              {/* ========================= */}
-      {/* Top Navigation */}
-      {/* ========================= */}
-
-      <div className="flex h-28 items-center justify-between">
-
-        {/* PREV */}
+        {/* Previous */}
 
         <button
           onClick={prevSlide}
-          className="hidden items-center gap-3 text-sm font-semibold uppercase tracking-[0.35em] text-white transition hover:text-[#F4C542] lg:flex"
+          className="
+            hidden
+            items-center
+            gap-3
+            text-xs
+            font-semibold
+            uppercase
+            tracking-[0.5em]
+            text-white
+            lg:flex
+          "
         >
-          <ChevronLeft size={18} />
+          <ChevronLeft size={16}/>
           PREV
         </button>
 
-        {/* Counter */}
 
-        <div className="mx-auto flex items-center gap-6 md:gap-8">
 
-          {heroes.map((_, index) => (
+        {/* Numbers */}
 
+        <div
+          className="
+            flex
+            items-center
+            gap-8
+          "
+        >
+
+          {heroes.map((_, index)=>(
             <button
               key={index}
-              onClick={() => setCurrent(index)}
-              className="group flex items-center gap-6"
-            >
+              onClick={()=>setCurrent(index)}
+              className={`
+                text-sm
+                font-semibold
+                tracking-widest
 
-              <span
-                className={`text-xl font-semibold transition-all duration-300 ${
+                ${
                   current === index
-                    ? "text-[#F4C542]"
-                    : "text-white/60 hover:text-white"
-                }`}
-              >
-                {String(index + 1).padStart(2, "0")}
-              </span>
-
-              {index !== heroes.length - 1 && (
-                <span className="hidden h-px w-14 bg-white/20 xl:block" />
-              )}
-
+                  ? "text-yellow-400"
+                  : "text-white/60"
+                }
+              `}
+            >
+              {String(index+1).padStart(2,"0")}
             </button>
-
           ))}
 
         </div>
 
-        {/* NEXT */}
+
+
+        {/* Next */}
 
         <button
           onClick={nextSlide}
-          className="hidden items-center gap-3 text-sm font-semibold uppercase tracking-[0.35em] text-white transition hover:text-[#F4C542] lg:flex"
+          className="
+            hidden
+            items-center
+            gap-3
+            text-xs
+            font-semibold
+            uppercase
+            tracking-[0.5em]
+            text-white
+            lg:flex
+          "
         >
           NEXT
-          <ChevronRight size={18} />
+          <ChevronRight size={16}/>
         </button>
+
 
       </div>
 
-      {/* ========================= */}
-      {/* Hero Content */}
-      {/* ========================= */}
 
-      <div className="flex flex-1 items-center">
 
-        <div className="grid w-full items-center gap-20 xl:grid-cols-[1.15fr_480px]">
+      {/* ================= Glass Container ================= */}
 
-          {/* ========================= */}
-          {/* Left Side */}
-          {/* ========================= */}
+     <div
+  className="
+    flex
+    flex-1
+    items-end
 
-          <div className="max-w-3xl">
+    pb-14
+
+    lg:pb-20
+  "
+>
+
+        <div
+  className="
+    grid
+    w-full
+
+    min-h-[430px]
+
+    items-center
+
+    gap-16
+
+    rounded-[14px]
+
+    border
+    border-white/10
+
+    bg-white/[0.05]
+
+    backdrop-blur-xl
+
+    shadow-[0_10px_40px_rgba(0,0,0,0.18)]
+
+    px-12
+    py-10
+
+    lg:px-16
+    lg:py-12
+
+    xl:grid-cols-[1fr_320px]
+  "
+>
+                  {/* ================= LEFT CONTENT ================= */}
+
+          <div
+            className="
+              flex
+              flex-col
+              justify-center
+            "
+          >
 
             {/* Tagline */}
 
-            <span className="
-              inline-flex
-              rounded-full
-              border
-              border-white/20
-              bg-white/10
-              px-6
-              py-3
-              text-sm
-              font-medium
-              tracking-wide
-              text-white
-              backdrop-blur-xl
-            ">
+            <div
+              className="
+                inline-flex
+                w-fit
+                rounded-full
+                border
+                border-white/20
+                bg-white/10
+                px-5
+                py-2
+
+                backdrop-blur-md
+
+                text-xs
+                font-medium
+                text-white
+
+                tracking-wide
+              "
+            >
               {hero.tagline}
-            </span>
+            </div>
+
+
 
             {/* Heading */}
 
-            <h1 className="
-              mt-10
-              text-5xl
-              font-bold
-              leading-[1.08]
-              text-white
-              md:text-6xl
-              xl:text-7xl
-              2xl:text-[88px]
-            ">
+            <h1
+              className="
+                mt-8
 
-              {hero.title}{" "}
+                max-w-[720px]
 
-              <span className="text-[#F4C542]">
+                font-serif
+
+                text-5xl
+
+                font-semibold
+
+                leading-[1.05]
+
+                text-white
+
+
+                sm:text-6xl
+
+
+                xl:text-[68px]
+              "
+            >
+
+              {hero.title}
+
+              {" "}
+
+              <span
+                className="
+                  text-[#F4C542]
+                "
+              >
                 {hero.highlightText}
               </span>
+
 
               {" "}
 
@@ -217,237 +409,429 @@ export default function HeroSlider({
 
             </h1>
 
+
+
             {/* Button */}
 
-            <div className="mt-14">
+            <div
+              className="
+                mt-10
+              "
+            >
 
               <Link
                 href={hero.buttonLink}
                 className="
                   inline-flex
+
                   items-center
-                  gap-4
-                  rounded-full
+
+                  gap-3
+
                   bg-white
+
                   px-8
+
                   py-4
-                  text-base
+
+                  text-sm
+
                   font-semibold
+
                   text-slate-900
+
+
                   transition-all
+
                   duration-300
+
+
                   hover:bg-[#F4C542]
                 "
               >
+
                 {hero.buttonText}
 
-                <ArrowUpRight size={18} />
+
+                <ArrowUpRight
+                  size={18}
+                />
 
               </Link>
 
             </div>
 
-          </div>
-                    {/* ========================= */}
-          {/* Right Glass Card */}
-          {/* ========================= */}
 
-          <div className="relative">
+          </div>  
+          
+                  {/* ================= RIGHT CARD ================= */}
+
+          <div
+            className="
+              relative
+              self-end
+            "
+          >
 
             {/* Glow */}
 
-            <div className="absolute -inset-5 rounded-[42px] bg-emerald-400/10 blur-3xl" />
+            <div
+              className="
+                absolute
+                -inset-6
+
+                rounded-[35px]
+
+                bg-emerald-400/5
+
+                bluxl
+              "
+            />
+
+
+            {/* Card */}
 
             <div
               className="
                 relative
-               overflow-visible
-                rounded-[36px]
+
+                rounded-[18px]
+
                 border
-                border-white/15
-                bg-white/[0.08]
-                p-8
-                backdrop-blur-3xl
-                shadow-[0_30px_80px_rgba(0,0,0,.35)]
-                lg:p-10
+
+                border-white/10
+
+
+                bg-white/[0.5]
+
+
+                p-6
+
+
+                backdrop-blur-lg
+
+
+                shadow-[0_10px_35px_rgba(0,0,0,0.15)]
+
+
+                lg:p-8
               "
             >
 
-              {/* Top */}
 
-              <div className="mb-8">
+              {/* Small Title */}
 
-                <p className="text-sm font-semibold uppercase tracking-[0.30em] text-white/70">
-                  Academic Program
-                </p>
+              <p
+                className="
+                  text-xs
 
-                <h2 className="mt-3 text-3xl font-bold text-white lg:text-4xl">
-                  {hero.rightTitle}
-                </h2>
+                  font-semibold
 
-              </div>
+                  uppercase
+
+                  tracking-[0.35em]
+
+                  text-white/70
+                "
+              >
+                Academic Program
+              </p>
+
+
+
+              {/* Main Title */}
+
+              <h2
+                className="
+                  mt-4
+
+                  text-3xl
+
+                  font-bold
+
+                  text-white
+                "
+              >
+                {hero.rightTitle}
+              </h2>
+
+
+
 
               {/* Course One */}
 
               <div
                 className="
-                  rounded-3xl
+                  mt-8
+
+                  rounded-[14px]
+
                   border
+
                   border-white/10
-                  bg-white/5
-                  p-6
-                  transition-all
-                  duration-300
-                  hover:bg-white/10
+
+
+                  bg-white/[0.03]
+
+
+                  p-5
                 "
               >
 
-                <h3 className="text-xl font-semibold text-white">
+                <h3
+                  className="
+                    text-lg
+
+                    font-semibold
+
+                    text-white
+                  "
+                >
                   {hero.courseOneTitle}
                 </h3>
 
-                <p className="mt-4 leading-8 text-white/70">
+
+                <p
+                  className="
+                    mt-3
+
+                    text-sm
+
+                    leading-6
+
+                    text-white/70
+                  "
+                >
                   {hero.courseOneDescription}
                 </p>
 
+
               </div>
+
+
 
               {/* Divider */}
 
-              <div className="my-8 h-px bg-white/10" />
+              <div
+                className="
+                  my-6
+
+                  h-px
+
+                  bg-white/20
+                "
+              />
+
+
+
 
               {/* Course Two */}
 
               <div
                 className="
-                  rounded-3xl
+                  rounded-[14px]
+
                   border
+
                   border-white/10
-                  bg-white/5
-                  p-6
-                  transition-all
-                  duration-300
-                  hover:bg-white/10
+
+
+                  bg-white/[0.03]
+
+
+                  p-5
                 "
               >
 
-                <h3 className="text-xl font-semibold text-white">
+                <h3
+                  className="
+                    text-lg
+
+                    font-semibold
+
+                    text-white
+                  "
+                >
                   {hero.courseTwoTitle}
                 </h3>
 
-                <p className="mt-4 leading-8 text-white/70">
+
+                <p
+                  className="
+                    mt-3
+
+                    text-sm
+
+                    leading-6
+
+                    text-white/70
+                  "
+                >
                   {hero.courseTwoDescription}
                 </p>
 
+
               </div>
 
-              {/* Bottom */}
 
-              <div className="mt-10 flex items-center justify-between">
 
-                <span className="text-sm tracking-[0.25em] text-white/50 uppercase">
+
+              {/* Bottom Explore */}
+
+              <div
+                className="
+                  mt-8
+
+                  flex
+
+                  items-center
+
+                  justify-between
+                "
+              >
+
+                <span
+                  className="
+                    text-xs
+
+                    uppercase
+
+                    tracking-[0.35em]
+
+                    text-white/60
+                  "
+                >
                   Explore
                 </span>
+
+
 
                 <button
                   onClick={nextSlide}
                   className="
                     flex
-                    h-14
-                    w-14
+
+                    h-12
+
+                    w-12
+
                     items-center
+
                     justify-center
+
+
                     rounded-full
-                    bg-[#0B7D63]
+
+
+                    bg-emerald-600
+
+
                     text-white
-                    transition-all
-                    duration-300
-                    hover:scale-105
-                    hover:bg-[#0FA37F]
+
+
+                    transition
+
+
+                    hover:scale-110
                   "
                 >
-                  <ArrowUpRight size={22} />
+
+                  <ArrowUpRight
+                    size={20}
+                  />
+
                 </button>
 
+
               </div>
+
 
             </div>
 
           </div>
+                    </div>
+          {/* End Right Card */}
+
 
         </div>
+        {/* End Grid */}
+
 
       </div>
-            {/* ========================= */}
-      {/* Mobile Navigation */}
-      {/* ========================= */}
+      {/* End Flex Wrapper */}
 
-      <div className="mt-10 flex items-center justify-center gap-4 lg:hidden">
+
+
+      {/* ================= Mobile Controls ================= */}
+
+      <div
+        className="
+          mt-8
+          flex
+          justify-center
+          gap-4
+          pb-6
+
+          lg:hidden
+        "
+      >
 
         <button
           onClick={prevSlide}
           className="
             flex
-            h-12
-            w-12
+            h-10
+            w-10
             items-center
             justify-center
+
             rounded-full
+
             border
-            border-white/20
+            border-white/30
+
             bg-white/10
+
             text-white
-            backdrop-blur-xl
+
+            backdrop-blur-md
           "
         >
-          <ChevronLeft size={20} />
+          <ChevronLeft size={18}/>
         </button>
 
-        <div className="flex items-center gap-3">
 
-          {heroes.map((_, index) => (
-
-            <button
-              key={index}
-              onClick={() => setCurrent(index)}
-              className={`transition-all duration-300 ${
-                current === index
-                  ? "h-3 w-10 rounded-full bg-[#F4C542]"
-                  : "h-3 w-3 rounded-full bg-white/40"
-              }`}
-            />
-
-          ))}
-
-        </div>
 
         <button
           onClick={nextSlide}
           className="
             flex
-            h-12
-            w-12
+            h-10
+            w-10
             items-center
             justify-center
+
             rounded-full
+
             border
-            border-white/20
+            border-white/30
+
             bg-white/10
+
             text-white
-            backdrop-blur-xl
+
+            backdrop-blur-md
           "
         >
-          <ChevronRight size={20} />
+          <ChevronRight size={18}/>
         </button>
 
+
       </div>
+   
 
-    </div>
-
-    {/* Decorative Gradient */}
-
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#004B3F]/70 via-[#004B3F]/30 to-transparent" />
 
   </section>
+
 );
 }
