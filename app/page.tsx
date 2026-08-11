@@ -1,5 +1,12 @@
 import Hero from "@/components/home/Hero";
 import Notice from "@/components/home/Notice";
+import Publication from "@/components/home/Publication";
+import About from "@/components/home/About";
+import Statistics from "@/components/home/Statistics";
+import DepartmentSection from "@/components/home/DepartmentSection";
+import Admission from "@/components/home/Admission";
+import Facilities from "@/components/home/Facilities";
+import PrincipalMessage from "@/components/home/PrincipalMessage";
 
 
 export default function HomePage() {
@@ -52,11 +59,17 @@ export default function HomePage() {
             {/* PUBLICATION */}
 
             <div className="min-w-0 w-full">
-              
+              <Publication />
             </div>
           </div>
         </div>
       </section>
+      <About />
+      <Statistics />
+      <DepartmentSection />
+      <Admission />
+      <Facilities />
+      <PrincipalMessage />
     </main>
   );
 }
