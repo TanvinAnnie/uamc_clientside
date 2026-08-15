@@ -7,7 +7,7 @@ import DepartmentSection from "@/components/home/DepartmentSection";
 import Admission from "@/components/home/Admission";
 import Facilities from "@/components/home/Facilities";
 import PrincipalMessage from "@/components/home/PrincipalMessage";
-
+import CampusLifeSection from "@/components/home/campus-life/CampusLifeSection";
 
 export default function HomePage() {
   return (
@@ -70,6 +70,7 @@ export default function HomePage() {
       <Admission />
       <Facilities />
       <PrincipalMessage />
+      <CampusLifeSection />
     </main>
   );
 }

@@ -106,12 +106,22 @@ export default function Facilities() {
         // ADMIN API
         // =================================================
 
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_ADMIN_URL}/api/facilities`,
-          {
-            cache: "no-store",
-          }
-        );
+       const apiUrl =
+`${process.env.NEXT_PUBLIC_ADMIN_URL}/api/facilities`;
+
+console.log(
+"FACILITIES API URL:",
+apiUrl
+);
+
+
+const res = await fetch(
+apiUrl,
+{
+cache:"no-store",
+}
+);
+      
 
         // =================================================
         // API ERROR
